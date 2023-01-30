@@ -1,13 +1,9 @@
-const { Sequelize, DataTypes } = require('sequelize');
-
-
-const sequelize = new Sequelize('social_network', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
+const path = require('path');
+const { sequelize } = require('../DB');
+const { DataTypes } = require('sequelize');
 
 const User = sequelize.define('User', {
-
+    // Model attributes are defined here
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -22,7 +18,6 @@ const User = sequelize.define('User', {
     password: {
         type: DataTypes.STRING,
         allowNull: false
-
     },
     first_name: {
         type: DataTypes.STRING,
@@ -56,25 +51,11 @@ const User = sequelize.define('User', {
         type: DataTypes.FLOAT,
         allowNull: true,
         defaultValue: 0
-    },
+    }
 }, {
+    // Other model options go here
     tableName: 'users',
     timestamps: false
 });
 
-
-; (async () => {
-    try {
-        await User.sync({
-            alter: true,
-            force: false
-
-
-        });
-
-        const user = await User.findByPk(1);
-        user.destroy();
-    } catch (error) {
-        console.error(error);
-    }
-})();
+module.exports = { User }
